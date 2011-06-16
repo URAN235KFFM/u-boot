@@ -244,12 +244,13 @@ int dram_init(void)
 void reset_phy(void)
 {
 	char *name = "egiga0";
+	u8 port_addr[] = CONFIG_PHY_ADDRS;
 
 	if (miiphy_set_current_dev(name))
 		return;
 
 	/* reset the phy */
-	miiphy_reset(name, CONFIG_PHY_BASE_ADR);
+	miiphy_reset(name, port_addr[0]);
 }
 
 #if defined(CONFIG_HUSH_INIT_VAR)

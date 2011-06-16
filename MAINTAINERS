@@ -656,6 +656,10 @@ Frederik Kriewitz <frederik@kriewitz.eu>
 
 	devkit8000	ARM CORTEX-A8 (OMAP3530 SoC)
 
+Tor Krill <tor@excito.com>
+
+	bubba3		ARM926EJS (Kirkwood SoC)
+
 Sergey Kubushyn <ksi@koi8.net>
 
 	DV-EVM		ARM926EJS

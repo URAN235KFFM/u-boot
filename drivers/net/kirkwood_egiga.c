@@ -629,6 +629,7 @@ int kirkwood_egiga_initialize(bd_t * bis)
 	int devnum;
 	char *s;
 	u8 used_ports[MAX_KWGBE_DEVS] = CONFIG_KIRKWOOD_EGIGA_PORTS;
+	u8 port_addr[MAX_KWGBE_DEVS] = PHY_ADDRS;
 
 	for (devnum = 0; devnum < MAX_KWGBE_DEVS; devnum++) {
 		/*skip if port is configured not to use */
@@ -712,7 +713,7 @@ int kirkwood_egiga_initialize(bd_t * bis)
 		miiphy_register(dev->name, smi_reg_read, smi_reg_write);
 		/* Set phy address of the port */
 		miiphy_write(dev->name, KIRKWOOD_PHY_ADR_REQUEST,
-				KIRKWOOD_PHY_ADR_REQUEST, PHY_BASE_ADR + devnum);
+				KIRKWOOD_PHY_ADR_REQUEST, port_addr[devnum]);
 #endif
 	}
 	return 0;

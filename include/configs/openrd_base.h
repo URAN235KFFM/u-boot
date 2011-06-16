@@ -186,7 +186,7 @@
 #define CONFIG_KIRKWOOD_EGIGA	/* Enable kirkwood Gbe Controller Driver */
 #define CONFIG_SYS_FAULT_ECHO_LINK_DOWN	/* detect link using phy */
 #define CONFIG_KIRKWOOD_EGIGA_PORTS	{1,0}	/* enable port 0 only */
-#define CONFIG_PHY_BASE_ADR	0x8
+#define CONFIG_PHY_ADDRS	{0x8,0x9}
 #define CONFIG_ENV_OVERWRITE	/* ethaddr can be reprogrammed */
 #define CONFIG_RESET_PHY_R	/* use reset_phy() to init mv8831116 PHY */
 #endif /* CONFIG_CMD_NET */

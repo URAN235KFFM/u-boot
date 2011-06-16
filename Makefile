@@ -2908,6 +2908,9 @@ ap926ejs_config		\
 ap946es_config: unconfig
 	@board/armltd/integrator/split_by_variant.sh ap $@
 
+bubba3_config: unconfig
+	@$(MKCONFIG) $(@:_config=) arm arm926ejs $(@:_config=) Excito kirkwood
+
 integratorcp_config	\
 cp_config		\
 cp920t_config		\

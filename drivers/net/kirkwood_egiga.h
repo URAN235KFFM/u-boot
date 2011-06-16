@@ -30,11 +30,11 @@
 
 #define MAX_KWGBE_DEVS	2	/*controller has two ports */
 
-/* PHY_BASE_ADR is board specific and can be configured */
-#if defined (CONFIG_PHY_BASE_ADR)
-#define PHY_BASE_ADR		CONFIG_PHY_BASE_ADR
+/* PHY addresses is board specific and can be configured */
+#if defined (CONFIG_PHY_ADDRS)
+#define PHY_ADDRS		CONFIG_PHY_ADDRS
 #else
-#define PHY_BASE_ADR		0x08	/* default phy base addr */
+#define PHY_ADDRS		{0x08,0x09}	/* default phy base addr */
 #endif
 
 /* Constants */
