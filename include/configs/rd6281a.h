@@ -100,7 +100,7 @@
 #define CONFIG_MV88E61XX_MULTICHIP_ADRMODE
 #define CONFIG_DIS_AUTO_NEG_SPEED_GMII /*Disable Auto speed negociation */
 #define CONFIG_PHY_SPEED	_1000BASET	/*Force PHYspeed to 1GBPs */
-#define CONFIG_PHY_BASE_ADR	0x0A
+#define CONFIG_PHY_ADDRS	{0x0A,0x0B}
 #define CONFIG_MV88E61XX_SWITCH	/* Enable MV88E61XX switch driver */
 #endif /* CONFIG_CMD_NET */
 

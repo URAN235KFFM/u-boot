@@ -42913,6 +42913,18 @@ extern unsigned int __machine_arch_type;
 # define machine_is_goflexhome()	(0)
 #endif
 
+#ifdef CONFIG_MACH_BUBBA3
+# ifdef machine_arch_type
+#  undef machine_arch_type
+#  define machine_arch_type	__machine_arch_type
+# else
+#  define machine_arch_type	MACH_TYPE_BUBBA3
+# endif
+# define machine_is_bubba3()	(machine_arch_type == MACH_TYPE_BUBBA3)
+#else
+# define machine_is_bubba3()	(0)
+#endif
+
 /*
  * These have not yet been registered
  */

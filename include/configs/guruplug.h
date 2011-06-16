@@ -96,7 +96,7 @@
  */
 #ifdef CONFIG_CMD_NET
 #define CONFIG_MVGBE_PORTS	{1, 1}	/* enable both ports */
-#define CONFIG_PHY_BASE_ADR	0
+#define CONFIG_PHY_ADDRS	{0,1}
 #endif /* CONFIG_CMD_NET */
 
 /*

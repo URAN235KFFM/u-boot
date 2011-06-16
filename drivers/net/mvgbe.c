@@ -647,6 +647,7 @@ int mvgbe_initialize(bd_t *bis)
 	int devnum;
 	char *s;
 	u8 used_ports[MAX_MVGBE_DEVS] = CONFIG_MVGBE_PORTS;
+	u8 port_addr[MAX_MVGBE_DEVS] = PHY_ADDRS;
 
 	for (devnum = 0; devnum < MAX_MVGBE_DEVS; devnum++) {
 		/*skip if port is configured not to use */
@@ -749,7 +750,7 @@ error1:
 		miiphy_register(dev->name, smi_reg_read, smi_reg_write);
 		/* Set phy address of the port */
 		miiphy_write(dev->name, MV_PHY_ADR_REQUEST,
-				MV_PHY_ADR_REQUEST, PHY_BASE_ADR + devnum);
+				MV_PHY_ADR_REQUEST, port_addr[devnum]);
 #endif
 	}
 	return 0;
