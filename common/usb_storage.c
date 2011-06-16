@@ -166,9 +166,9 @@ int usb_stor_get_info(struct usb_device *dev, struct us_data *us,
 		      block_dev_desc_t *dev_desc);
 int usb_storage_probe(struct usb_device *dev, unsigned int ifnum,
 		      struct us_data *ss);
-unsigned long usb_stor_read(int device, unsigned long blknr,
+unsigned long usb_stor_read(int device, lbaint_t blknr,
 			    unsigned long blkcnt, void *buffer);
-unsigned long usb_stor_write(int device, unsigned long blknr,
+unsigned long usb_stor_write(int device, lbaint_t blknr,
 			     unsigned long blkcnt, const void *buffer);
 struct usb_device * usb_get_dev_index(int index);
 void uhci_show_temp_int_td(void);
@@ -981,7 +981,8 @@ static int usb_read_capacity(ccb *srb, struct us_data *ss)
 	return -1;
 }
 
-static int usb_read_10(ccb *srb, struct us_data *ss, unsigned long start,
+/* TODO: maybe implement read16 */
+static int usb_read_10(ccb *srb, struct us_data *ss, lbaint_t start,
 		       unsigned short blocks)
 {
 	memset(&srb->cmd[0], 0, 12);
@@ -998,7 +999,7 @@ static int usb_read_10(ccb *srb, struct us_data *ss, unsigned long start,
 	return ss->transport(srb, ss);
 }
 
-static int usb_write_10(ccb *srb, struct us_data *ss, unsigned long start,
+static int usb_write_10(ccb *srb, struct us_data *ss, lbaint_t start,
 			unsigned short blocks)
 {
 	memset(&srb->cmd[0], 0, 12);
@@ -1041,10 +1042,11 @@ static void usb_bin_fixup(struct usb_device_descriptor descriptor,
 
 #define USB_MAX_READ_BLK 20
 
-unsigned long usb_stor_read(int device, unsigned long blknr,
+unsigned long usb_stor_read(int device, lbaint_t blknr,
 			    unsigned long blkcnt, void *buffer)
 {
-	unsigned long start, blks, buf_addr;
+	lbaint_t start;
+	unsigned long blks, buf_addr;
 	unsigned short smallblks;
 	struct usb_device *dev;
 	int retry, i;
@@ -1077,7 +1079,7 @@ unsigned long usb_stor_read(int device, unsigned long blknr,
 		return 0;
 	}
 
-	USB_STOR_PRINTF("\nusb_read: dev %d startblk %lx, blccnt %lx"
+	USB_STOR_PRINTF("\nusb_read: dev %d startblk %llx, blccnt %lx"
 			" buffer %lx\n", device, start, blks, buf_addr);
 
 	do {
@@ -1107,7 +1109,7 @@ retry_it:
 		buf_addr += srb->datalen;
 	} while (blks != 0);
 
-	USB_STOR_PRINTF("usb_read: end startblk %lx, blccnt %x buffer %lx\n",
+	USB_STOR_PRINTF("usb_read: end startblk %llx, blccnt %x buffer %lx\n",
 			start, smallblks, buf_addr);
 
 	usb_disable_asynch(0); /* asynch transfer allowed */
@@ -1118,10 +1120,11 @@ retry_it:
 
 #define USB_MAX_WRITE_BLK 20
 
-unsigned long usb_stor_write(int device, unsigned long blknr,
+unsigned long usb_stor_write(int device, lbaint_t blknr,
 				unsigned long blkcnt, const void *buffer)
 {
-	unsigned long start, blks, buf_addr;
+	lbaint_t start;
+	unsigned long blks, buf_addr;
 	unsigned short smallblks;
 	struct usb_device *dev;
 	int retry, i;
@@ -1155,7 +1158,7 @@ unsigned long usb_stor_write(int device, unsigned long blknr,
 		return 0;
 	}
 
-	USB_STOR_PRINTF("\nusb_write: dev %d startblk %lx, blccnt %lx"
+	USB_STOR_PRINTF("\nusb_write: dev %d startblk %llx, blccnt %lx"
 			" buffer %lx\n", device, start, blks, buf_addr);
 
 	do {
@@ -1187,7 +1190,7 @@ retry_it:
 		buf_addr += srb->datalen;
 	} while (blks != 0);
 
-	USB_STOR_PRINTF("usb_write: end startblk %lx, blccnt %x buffer %lx\n",
+	USB_STOR_PRINTF("usb_write: end startblk %llx, blccnt %x buffer %lx\n",
 			start, smallblks, buf_addr);
 
 	usb_disable_asynch(0); /* asynch transfer allowed */
